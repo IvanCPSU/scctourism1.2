@@ -1,0 +1,156 @@
+.tourist-map-section {
+  padding: 3rem 1.5rem;
+  background-color: #f9f9f9;
+}
+
+.tourist-map-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.tourist-map-header h2 {
+  font-size: 2rem;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+.tourist-map-header p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* Search bar */
+.map-search-wrapper {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto 1.25rem;
+}
+
+.map-search-box {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 2px solid #d0d0d0;
+  border-radius: 30px;
+  padding: 0.45rem 1rem;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: border-color 0.2s;
+}
+
+.map-search-box:focus-within {
+  border-color: #2a9d8f;
+}
+
+.map-search-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.map-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  background: transparent;
+  color: #1a1a2e;
+}
+
+.map-search-clear {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.map-search-clear:hover {
+  color: #333;
+}
+
+.map-suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  z-index: 1000;
+}
+
+.map-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-size: 0.92rem;
+  color: #1a1a2e;
+  transition: background 0.15s;
+}
+
+.map-suggestion-item:hover {
+  background: #f0faf9;
+  color: #2a9d8f;
+}
+
+.suggestion-pin {
+  font-size: 0.9rem;
+}
+
+/* Map container */
+.tourist-map-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.tourist-map {
+  width: 100%;
+  height: 480px;
+}
+
+/* Popup */
+.map-popup {
+  padding: 0;
+  min-width: 220px;
+}
+
+.map-popup-image {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 6px 6px 0 0;
+  display: block;
+}
+
+.map-popup-body {
+  padding: 0.6rem 0.4rem 0.2rem;
+}
+
+.map-popup-body h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  color: #1a1a2e;
+}
+
+.map-popup-location {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.map-popup-body p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #444;
+}
