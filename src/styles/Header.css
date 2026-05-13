@@ -15,6 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .logo-link {
@@ -85,16 +86,28 @@
     left: 0;
     right: 0;
     flex-direction: column;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    gap: 1rem;
+    align-items: flex-start;
+    background: linear-gradient(135deg, #beb214d6 0%, #24c005 100%);
+    padding: 0 1rem;
+    gap: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.3s ease, padding 0.3s ease;
   }
 
   .nav.open {
     max-height: 500px;
+    padding: 1rem;
+  }
+
+  .nav .nav-link {
+    width: 100%;
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .nav .nav-link:last-child {
+    border-bottom: none;
   }
 
   .header-container {
