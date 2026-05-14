@@ -1,34 +1,45 @@
-import { useState, useEffect } from 'react';
-import { useAdmin } from '../context/AdminContext';
+import { useState } from 'react';
+import { useAdmin, ASSET_IMAGES } from '../context/AdminContext';
 import '../styles/Admin.css';
 
-// ─── Reusable image input ────────────────────────────────────────────────────
-function ImageInput({ value, onChange, label = 'Image' }) {
-  function handleFile(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => onChange(ev.target.result);
-    reader.readAsDataURL(file);
-  }
+// ─── Asset Picker ─────────────────────────────────────────────────────────────
+// Shows a grid of all images in src/assets so the user can pick one.
+function AssetPicker({ value, onChange, label = 'Image' }) {
+  const [open, setOpen] = useState(false);
+
+  const selected = ASSET_IMAGES.find((a) => a.src === value);
+
   return (
     <div className="form-group">
       <label>{label}</label>
-      <div className="image-input-row">
-        <input
-          type="text"
-          placeholder="Paste image URL…"
-          value={typeof value === 'string' && value.startsWith('http') ? value : ''}
-          onChange={(e) => onChange(e.target.value)}
-        />
-        <span className="or-divider">or</span>
-        <label className="file-upload-btn">
-          Upload file
-          <input type="file" accept="image/*" onChange={handleFile} hidden />
-        </label>
+
+      {/* Current selection preview */}
+      <div className="asset-picker-trigger" onClick={() => setOpen((o) => !o)}>
+        {value ? (
+          <>
+            <img src={value} alt="selected" className="asset-thumb-selected" />
+            <span className="asset-name-selected">{selected?.name ?? 'Custom'}</span>
+          </>
+        ) : (
+          <span className="asset-placeholder">Click to choose an image from assets…</span>
+        )}
+        <span className="asset-picker-arrow">{open ? '▲' : '▼'}</span>
       </div>
-      {value && (
-        <img src={value} alt="preview" className="image-preview" />
+
+      {/* Grid of available assets */}
+      {open && (
+        <div className="asset-grid">
+          {ASSET_IMAGES.map((asset) => (
+            <div
+              key={asset.name}
+              className={`asset-grid-item ${value === asset.src ? 'selected' : ''}`}
+              onClick={() => { onChange(asset.src); setOpen(false); }}
+            >
+              <img src={asset.src} alt={asset.name} />
+              <span>{asset.name}</span>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -108,36 +119,20 @@ function DestinationsTab() {
           <div className="form-row">
             <div className="form-group">
               <label>Latitude</label>
-              <input
-                type="number"
-                step="any"
-                placeholder="e.g. 10.4928"
-                value={form.lat}
-                onChange={(e) => set('lat', e.target.value)}
-              />
+              <input type="number" step="any" placeholder="e.g. 10.4928" value={form.lat} onChange={(e) => set('lat', e.target.value)} />
             </div>
             <div className="form-group">
               <label>Longitude</label>
-              <input
-                type="number"
-                step="any"
-                placeholder="e.g. 123.4142"
-                value={form.lng}
-                onChange={(e) => set('lng', e.target.value)}
-              />
+              <input type="number" step="any" placeholder="e.g. 123.4142" value={form.lng} onChange={(e) => set('lng', e.target.value)} />
             </div>
             <div className="form-group form-group-sm" style={{ justifyContent: 'flex-end' }}>
-              <a
-                href="https://www.latlong.net/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ fontSize: '0.78rem', color: '#2a9d8f', marginTop: 'auto', paddingBottom: '0.5rem' }}
-              >
+              <a href="https://www.latlong.net/" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: '0.78rem', color: '#2a9d8f', marginTop: 'auto', paddingBottom: '0.5rem' }}>
                 🌐 Find coordinates
               </a>
             </div>
           </div>
-          <ImageInput value={form.image} onChange={(v) => set('image', v)} />
+          <AssetPicker value={form.image} onChange={(v) => set('image', v)} />
           <div className="form-actions">
             <button type="submit" className="btn-save">{editId ? 'Save Changes' : 'Add Destination'}</button>
             <button type="button" className="btn-cancel" onClick={cancel}>Cancel</button>
@@ -182,7 +177,6 @@ function BlogTab() {
   const [showForm, setShowForm] = useState(false);
 
   function set(field, val) { setForm((f) => ({ ...f, [field]: val })); }
-
   function openAdd() { setForm(empty); setEditId(null); setShowForm(true); }
   function openEdit(p) { setForm(p); setEditId(p.id); setShowForm(true); }
   function cancel() { setShowForm(false); setEditId(null); }
@@ -239,7 +233,16 @@ function BlogTab() {
             <label>Content *</label>
             <textarea required rows={5} value={form.content} onChange={(e) => set('content', e.target.value)} />
           </div>
-          <ImageInput value={form.image} onChange={(v) => set('image', v)} />
+          <div className="form-group">
+            <label>Image URL (external link)</label>
+            <input
+              type="text"
+              placeholder="https://example.com/image.jpg"
+              value={form.image}
+              onChange={(e) => set('image', e.target.value)}
+            />
+            {form.image && <img src={form.image} alt="preview" className="image-preview" />}
+          </div>
           <div className="form-actions">
             <button type="submit" className="btn-save">{editId ? 'Save Changes' : 'Add Article'}</button>
             <button type="button" className="btn-cancel" onClick={cancel}>Cancel</button>
@@ -282,7 +285,6 @@ function GalleryTab() {
   const [showForm, setShowForm] = useState(false);
 
   function set(field, val) { setForm((f) => ({ ...f, [field]: val })); }
-
   function openAdd() { setForm(empty); setEditId(null); setShowForm(true); }
   function openEdit(g) { setForm(g); setEditId(g.id); setShowForm(true); }
   function cancel() { setShowForm(false); setEditId(null); }
@@ -309,7 +311,7 @@ function GalleryTab() {
             <label>Title *</label>
             <input required value={form.title} onChange={(e) => set('title', e.target.value)} />
           </div>
-          <ImageInput value={form.url} onChange={(v) => set('url', v)} label="Photo" />
+          <AssetPicker value={form.url} onChange={(v) => set('url', v)} label="Photo" />
           <div className="form-actions">
             <button type="submit" className="btn-save">{editId ? 'Save Changes' : 'Add Photo'}</button>
             <button type="button" className="btn-cancel" onClick={cancel}>Cancel</button>
@@ -336,71 +338,6 @@ function GalleryTab() {
 }
 
 // ─── PAGE BACKGROUNDS TAB ────────────────────────────────────────────────────
-function PageBgCard({ pageId, label, appliedImage, onApply, onReset }) {
-  const [draft, setDraft]       = useState(appliedImage || '');
-  const [applied, setApplied]   = useState(false);
-
-  // Keep draft in sync if applied image changes externally (e.g. reset)
-  useEffect(() => { setDraft(appliedImage || ''); setApplied(false); }, [appliedImage]);
-
-  function handleFile(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => { setDraft(ev.target.result); setApplied(false); };
-    reader.readAsDataURL(file);
-  }
-
-  function handleApply() {
-    onApply(pageId, draft);
-    setApplied(true);
-    setTimeout(() => setApplied(false), 3000);
-  }
-
-  const previewBg = draft
-    ? `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(${draft})`
-    : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-
-  return (
-    <div className="pagebg-card">
-      <div className="pagebg-preview" style={{ backgroundImage: previewBg, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <span className="pagebg-label">{label}</span>
-        {applied && <span className="pagebg-applied-badge">✓ Applied</span>}
-      </div>
-
-      <div className="pagebg-controls">
-        <div className="image-input-row">
-          <input
-            type="text"
-            placeholder="Paste image URL…"
-            value={typeof draft === 'string' && draft.startsWith('http') ? draft : ''}
-            onChange={(e) => { setDraft(e.target.value); setApplied(false); }}
-          />
-          <label className="file-upload-btn">
-            Upload
-            <input type="file" accept="image/jpeg,image/png" onChange={handleFile} hidden />
-          </label>
-        </div>
-
-        <div className="pagebg-actions">
-          <button
-            className="btn-save"
-            disabled={!draft || draft === appliedImage}
-            onClick={handleApply}
-          >
-            Apply
-          </button>
-          {appliedImage && (
-            <button className="btn-cancel" onClick={() => onReset(pageId)}>
-              Reset
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function PageBgsTab() {
   const { pageBgs, updatePageBg, resetPageBg } = useAdmin();
 
@@ -410,19 +347,31 @@ function PageBgsTab() {
         <h2>Page Backgrounds</h2>
       </div>
       <p style={{ color: '#666', marginTop: '-0.5rem' }}>
-        Upload or paste a URL, then click <strong>Apply</strong> to set the header background for each page.
+        Choose an image from <code>src/assets</code> for each page header. Add new images to that folder and re-run the dev server to see them here.
       </p>
 
       <div className="pagebg-grid">
         {Object.entries(pageBgs).map(([pageId, { label, image }]) => (
-          <PageBgCard
-            key={pageId}
-            pageId={pageId}
-            label={label}
-            appliedImage={image}
-            onApply={updatePageBg}
-            onReset={resetPageBg}
-          />
+          <div key={pageId} className="pagebg-card">
+            <div
+              className="pagebg-preview"
+              style={{
+                backgroundImage: image
+                  ? `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(${image})`
+                  : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <span className="pagebg-label">{label}</span>
+            </div>
+            <div className="pagebg-controls">
+              <AssetPicker value={image} onChange={(v) => updatePageBg(pageId, v)} label="Background Image" />
+              <div className="pagebg-actions">
+                <button className="btn-cancel" onClick={() => resetPageBg(pageId)}>Reset to default</button>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>
@@ -439,7 +388,7 @@ function Admin() {
     <div className="admin-page">
       <div className="admin-header">
         <h1>⚙️ Admin Dashboard</h1>
-        <p>Manage destinations, articles, gallery photos, and page backgrounds</p>
+        <p>Manage destinations, articles, gallery, and page backgrounds — all images come from <code>src/assets/</code></p>
       </div>
 
       <div className="admin-tabs">
@@ -455,10 +404,10 @@ function Admin() {
       </div>
 
       <div className="admin-body">
-        {activeTab === 'Destinations'      && <DestinationsTab />}
-        {activeTab === 'Articles'          && <BlogTab />}
-        {activeTab === 'Gallery'           && <GalleryTab />}
-        {activeTab === 'Page Backgrounds'  && <PageBgsTab />}
+        {activeTab === 'Destinations'     && <DestinationsTab />}
+        {activeTab === 'Articles'         && <BlogTab />}
+        {activeTab === 'Gallery'          && <GalleryTab />}
+        {activeTab === 'Page Backgrounds' && <PageBgsTab />}
       </div>
     </div>
   );
