@@ -1,10 +1,15 @@
-import React from 'react';
+import { useAdmin } from '../context/AdminContext';
 import '../styles/About.css';
 
 function About() {
+  const { pageBgs } = useAdmin();
+  const bg = pageBgs?.about?.image;
+  const headerStyle = bg
+    ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    : {};
   return (
     <div className="about-page">
-      <section className="about-header">
+      <section className="about-header" style={headerStyle}>
         <div className="about-header-content">
           <h1>About San Carlos City Tourism</h1>
           <p>Learn more about our mission to showcase the beauty of San Carlos City</p>

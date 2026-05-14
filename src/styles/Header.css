@@ -58,6 +58,11 @@
   opacity: 0.9;
 }
 
+.nav-link-directory {
+  border: 1.5px solid rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
 .hamburger {
   display: none;
   flex-direction: column;

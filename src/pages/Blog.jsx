@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import BlogCard from '../components/BlogCard';
-import { blogPosts } from '../data/touristicData';
+import { useAdmin } from '../context/AdminContext';
 import '../styles/Blog.css';
 
 function Blog() {
+  const { blogPosts, pageBgs } = useAdmin();
+  const bg = pageBgs?.blog?.image;
+  const headerStyle = bg
+    ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    : {};
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const categories = ['All', ...new Set(blogPosts.map(post => post.category))];
@@ -14,7 +19,7 @@ function Blog() {
 
   return (
     <div className="blog-page">
-      <section className="blog-header">
+      <section className="blog-header" style={headerStyle}>
         <div className="blog-header-content">
           <h1>San Carlos City Blog</h1>
           <p>Travel guides, tips, and stories from San Carlos City</p>

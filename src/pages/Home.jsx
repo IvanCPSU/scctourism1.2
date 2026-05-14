@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { blogPosts, destinations } from '../data/touristicData';
+import { useAdmin } from '../context/AdminContext';
 import BlogCard from '../components/BlogCard';
 import DestinationCard from '../components/DestinationCard';
 import Gallery from '../components/Gallery';
@@ -8,22 +7,27 @@ import TestimonialSection from '../components/TestimonialSection';
 import '../styles/Home.css';
 
 function Home() {
+  const { blogPosts, destinations, pageBgs } = useAdmin();
+  const heroBg = pageBgs?.home?.image;
+  const heroStyle = heroBg
+    ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(${heroBg})` }
+    : {};
   const featuredPosts = blogPosts.filter(post => post.featured).slice(0, 3);
   const featuredDestinations = destinations.slice(0, 3);
 
   return (
     <div className="home">
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero" style={heroStyle}>
         <div className="hero-content">
-          <h1>Welcome to San Carlos City</h1>
-          <p>Discover Paradise in the Heart of the Philippines</p>
+          <h1>COME AND VISIT SAN CARLOS</h1>
+          <p>DISCOVER THE PARADISE IN THE HEART OF SAN CARLOS</p>
           <div className="hero-buttons">
             <Link to="/destinations" className="btn btn-primary">
-              Explore Destinations
+              EXPLORE DESTINATIONS
             </Link>
             <Link to="/blog" className="btn btn-secondary">
-              Read Our Blog
+              READ OUR BLOG
             </Link>
           </div>
         </div>

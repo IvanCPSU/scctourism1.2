@@ -1,0 +1,405 @@
+/* ── Admin Page Layout ─────────────────────────────────────────────────────── */
+.admin-page {
+  min-height: 100vh;
+  background: #f4f6f9;
+  padding-bottom: 4rem;
+}
+
+.admin-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  padding: 2rem 2.5rem;
+}
+
+.admin-header h1 {
+  margin: 0 0 0.3rem;
+  font-size: 1.8rem;
+}
+
+.admin-header p {
+  margin: 0;
+  opacity: 0.7;
+  font-size: 0.95rem;
+}
+
+/* ── Tabs ──────────────────────────────────────────────────────────────────── */
+.admin-tabs {
+  display: flex;
+  gap: 0;
+  background: #fff;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 0 2.5rem;
+}
+
+.admin-tab-btn {
+  background: none;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.admin-tab-btn:hover { color: #2a9d8f; }
+.admin-tab-btn.active { color: #2a9d8f; border-bottom-color: #2a9d8f; }
+
+/* ── Body ──────────────────────────────────────────────────────────────────── */
+.admin-body {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.tab-content { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.tab-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tab-toolbar h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.count-badge {
+  background: #2a9d8f;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
+.btn-add {
+  background: #2a9d8f;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-add:hover { background: #21867a; }
+
+.btn-save {
+  background: #2a9d8f;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-save:hover { background: #21867a; }
+
+.btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-cancel:hover { background: #ccc; }
+
+.btn-edit {
+  background: #f0a500;
+  color: #fff;
+  border: none;
+  padding: 0.35rem 0.8rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-edit:hover { background: #d4900a; }
+
+.btn-delete {
+  background: #e63946;
+  color: #fff;
+  border: none;
+  padding: 0.35rem 0.8rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-delete:hover { background: #c1121f; }
+
+/* ── Form ──────────────────────────────────────────────────────────────────── */
+.admin-form {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-form h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #1a1a2e;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 180px;
+}
+
+.form-group-sm { flex: 0 0 120px; min-width: 100px; }
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus { border-color: #2a9d8f; }
+
+.featured-check label {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+  margin-top: 1.4rem;
+}
+
+/* Image input */
+.image-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.image-input-row input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.or-divider { font-size: 0.8rem; color: #999; }
+
+.file-upload-btn {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.file-upload-btn:hover { background: #e0e0e0; }
+
+.image-preview {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-top: 0.4rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+/* ── Table ─────────────────────────────────────────────────────────────────── */
+.admin-table-wrapper {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-table th {
+  background: #f8f8f8;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #666;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.admin-table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+  color: #333;
+}
+
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: #fafafa; }
+
+.table-thumb {
+  width: 60px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 5px;
+  display: block;
+}
+
+.action-cell {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* ── Gallery grid ──────────────────────────────────────────────────────────── */
+.gallery-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-admin-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.gallery-admin-card img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-admin-info {
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.gallery-admin-info span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .admin-header { padding: 1.5rem 1rem; }
+  .admin-tabs { padding: 0 0.5rem; }
+  .admin-tab-btn { padding: 0.8rem 0.9rem; font-size: 0.85rem; }
+  .admin-body { padding: 0 0.75rem; }
+  .form-row { flex-direction: column; }
+}
+
+/* ── Page Backgrounds Tab ──────────────────────────────────────────────────── */
+.pagebg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.pagebg-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.pagebg-preview {
+  height: 140px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.75rem 1rem;
+}
+
+.pagebg-label {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+.pagebg-controls {
+  padding: 0.85rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pagebg-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pagebg-actions .btn-save:disabled {
+  background: #a0cfc9;
+  cursor: not-allowed;
+}
+
+.pagebg-applied-badge {
+  background: #2a9d8f;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  margin-left: auto;
+  align-self: flex-start;
+}

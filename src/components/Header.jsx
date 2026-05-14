@@ -44,6 +44,15 @@ function Header() {
           <Link to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>
             Contact
           </Link>
+          <a
+            href="https://vamosmobile.app/turismo/directory.php"
+            className="nav-link nav-link-directory"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Tourism Directory
+          </a>
         </nav>
       </div>
     </header>

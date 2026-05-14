@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import '../styles/TouristMap.css';
-import { destinations } from '../data/touristicData';
+import { useAdmin } from '../context/AdminContext';
 
 // Fix Leaflet's default marker icon broken by bundlers
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -17,25 +17,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-// Coordinates for each tourist spot — order matches destinations array in touristicData.js
-const coordinates = [
-  [10.4833, 123.3167],                      // Palo Alto Dam
-  [10.4950, 123.3050],                      // Cinalum Falls
-  [10.492956229084685, 123.40977824931879], // Barangay Balitoocan
-  [10.48133668672113, 123.41831792127],     // San Carlos Cathedral
-];
-
-// Merge destinations with their coordinates for easy lookup
-const spots = destinations.map((dest, i) => ({
-  ...dest,
-  coordinates: coordinates[i],
-}));
-
 // Center of San Carlos City
 const SAN_CARLOS_CENTER = [10.4928, 123.4142];
 
 // Inner component — has access to the map instance via useMap()
-function MapController({ target }) {
+function MapController({ target, spots }) {
   const map = useMap();
   const markerRefs = useRef({});
 
@@ -75,6 +61,13 @@ function MapController({ target }) {
 }
 
 function TouristMap() {
+  const { destinations } = useAdmin();
+
+  // Only show destinations that have valid coordinates
+  const spots = destinations
+    .filter((d) => d.lat && d.lng)
+    .map((d) => ({ ...d, coordinates: [parseFloat(d.lat), parseFloat(d.lng)] }));
+
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [target, setTarget] = useState(null);
@@ -95,7 +88,7 @@ function TouristMap() {
   function handleSelect(spot) {
     setQuery(spot.name);
     setSuggestions([]);
-    setTarget({ ...spot, _ts: Date.now() }); // _ts forces re-trigger if same spot selected twice
+    setTarget({ ...spot, _ts: Date.now() });
   }
 
   function handleKeyDown(e) {
@@ -161,7 +154,7 @@ function TouristMap() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <MapController target={target} />
+          <MapController target={target} spots={spots} />
         </MapContainer>
       </div>
     </section>

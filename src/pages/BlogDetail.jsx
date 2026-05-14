@@ -1,10 +1,10 @@
-import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { blogPosts } from '../data/touristicData';
+import { useAdmin } from '../context/AdminContext';
 import '../styles/BlogDetail.css';
 
 function BlogDetail() {
   const { id } = useParams();
+  const { blogPosts } = useAdmin();
   const post = blogPosts.find(p => p.id === parseInt(id));
 
   if (!post) {

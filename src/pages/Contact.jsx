@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useAdmin } from '../context/AdminContext';
 import '../styles/Contact.css';
 
 function Contact() {
+  const { pageBgs } = useAdmin();
+  const bg = pageBgs?.contact?.image;
+  const headerStyle = bg
+    ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    : {};
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -41,7 +47,7 @@ function Contact() {
 
   return (
     <div className="contact-page">
-      <section className="contact-header">
+      <section className="contact-header" style={headerStyle}>
         <div className="contact-header-content">
           <h1>Contact Us</h1>
           <p>Get in touch with San Carlos City Tourism</p>

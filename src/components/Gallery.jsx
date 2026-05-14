@@ -1,20 +1,10 @@
 import { useState } from 'react';
+import { useAdmin } from '../context/AdminContext';
 import '../styles/Gallery.css';
 
-// Local asset imports — add more images to src/assets/ and import them here
-import image1 from '../assets/Image1.jpg';
-
 function Gallery() {
+  const { gallery: galleryImages } = useAdmin();
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const galleryImages = [
-    { id: 1, title: "Palo Alto Dam",   url: image1 },  // replace with actual photo
-    { id: 2, title: "Waterfall",       url: image1 },  // replace with actual photo
-    { id: 3, title: "Mountain Vista",  url: image1 },  // replace with actual photo
-    { id: 4, title: "Local Market",    url: image1 },  // replace with actual photo
-    { id: 5, title: "Cathedral",       url: image1 },  // replace with actual photo
-    { id: 6, title: "Sunset View",     url: image1 },  // replace with actual photo
-  ];
 
   return (
     <section className="gallery">

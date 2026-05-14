@@ -1,12 +1,17 @@
-import { destinations } from '../data/touristicData';
+import { useAdmin } from '../context/AdminContext';
 import DestinationCard from '../components/DestinationCard';
 import TouristMap from '../components/TouristMap';
 import '../styles/Destinations.css';
 
 function Destinations() {
+  const { destinations, pageBgs } = useAdmin();
+  const bg = pageBgs?.destinations?.image;
+  const headerStyle = bg
+    ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    : {};
   return (
     <div className="destinations-page">
-      <section className="destinations-header">
+      <section className="destinations-header" style={headerStyle}>
         <div className="destinations-header-content">
           <h1>Explore San Carlos City</h1>
           <p>Discover the amazing attractions and destinations waiting for you</p>

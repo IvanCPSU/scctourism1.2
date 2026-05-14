@@ -1,3 +1,11 @@
+/* Barabara Font */
+@font-face {
+  font-family: 'Barabara';
+  src: url('../assets/BARABARA-final.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Home Page Styles */
 .home {
   min-height: 100vh;
@@ -16,6 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Barabara', sans-serif;
 }
 
 .hero-content h1 {
@@ -28,6 +37,7 @@
   font-size: 1.3rem;
   margin-bottom: 2rem;
   opacity: 0.95;
+  color: yellow;
 }
 
 .hero-buttons {
