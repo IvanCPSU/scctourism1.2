@@ -3,43 +3,69 @@ import { useAdmin, ASSET_IMAGES } from '../context/AdminContext';
 import '../styles/Admin.css';
 
 // ─── Asset Picker ─────────────────────────────────────────────────────────────
-// Shows a grid of all images in src/assets so the user can pick one.
+// Type a filename to filter, or browse the grid. Resolves to the Vite-imported src URL.
 function AssetPicker({ value, onChange, label = 'Image' }) {
-  const [open, setOpen] = useState(false);
+  const [query, setQuery]   = useState('');
+  const [open,  setOpen]    = useState(false);
 
   const selected = ASSET_IMAGES.find((a) => a.src === value);
+
+  const filtered = query.trim()
+    ? ASSET_IMAGES.filter((a) => a.name.toLowerCase().includes(query.toLowerCase()))
+    : ASSET_IMAGES;
+
+  function pick(asset) {
+    onChange(asset.src);
+    setQuery('');
+    setOpen(false);
+  }
 
   return (
     <div className="form-group">
       <label>{label}</label>
 
-      {/* Current selection preview */}
+      {/* Search / trigger row */}
       <div className="asset-picker-trigger" onClick={() => setOpen((o) => !o)}>
-        {value ? (
-          <>
-            <img src={value} alt="selected" className="asset-thumb-selected" />
-            <span className="asset-name-selected">{selected?.name ?? 'Custom'}</span>
-          </>
-        ) : (
-          <span className="asset-placeholder">Click to choose an image from assets…</span>
+        {value && (
+          <img src={value} alt="selected" className="asset-thumb-selected" />
         )}
+        <input
+          type="text"
+          className="asset-search-input"
+          placeholder={selected ? selected.name : 'Type filename or click to browse…'}
+          value={query}
+          onClick={(e) => { e.stopPropagation(); setOpen(true); }}
+          onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
+        />
         <span className="asset-picker-arrow">{open ? '▲' : '▼'}</span>
       </div>
 
-      {/* Grid of available assets */}
+      {/* Grid */}
       {open && (
         <div className="asset-grid">
-          {ASSET_IMAGES.map((asset) => (
+          {filtered.length === 0 && (
+            <p style={{ gridColumn: '1/-1', color: '#999', fontSize: '0.85rem', padding: '0.5rem' }}>
+              No matching images. Add the file to <code>src/assets/</code> and register it in AdminContext.jsx.
+            </p>
+          )}
+          {filtered.map((asset) => (
             <div
               key={asset.name}
               className={`asset-grid-item ${value === asset.src ? 'selected' : ''}`}
-              onClick={() => { onChange(asset.src); setOpen(false); }}
+              onClick={() => pick(asset)}
             >
               <img src={asset.src} alt={asset.name} />
               <span>{asset.name}</span>
             </div>
           ))}
         </div>
+      )}
+
+      {/* Current selection label */}
+      {value && !open && (
+        <p style={{ fontSize: '0.78rem', color: '#2a9d8f', marginTop: '0.3rem' }}>
+          ✓ {selected?.name ?? 'Custom image selected'}
+        </p>
       )}
     </div>
   );
